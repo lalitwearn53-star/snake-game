@@ -16,13 +16,13 @@ function init() {
   score = 0;
   document.getElementById("score").innerText = score;
 
-  food = {
-    x: Math.floor(Math.random() * 20) * box,
-    y: Math.floor(Math.random() * 20) * box
-  };
+ food = {
+  x: Math.floor(Math.random() * (canvasSize / box)) * box,
+  y: Math.floor(Math.random() * (canvasSize / box)) * box
+}; 
 
   if (game) clearInterval(game);
-  game = setInterval(draw, 120);
+  game = setInterval(draw, 200);
 }
 
 document.addEventListener("keydown", (e) => {
