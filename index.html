@@ -16,9 +16,15 @@
 
   <div class="controls">
     <button onclick="changeDirection('UP')">⬆️</button><br>
-    <button onclick="changeDirection('LEFT')">⬅️</button>
+  
     <button onclick="changeDirection('DOWN')">⬇️</button>
-    <button onclick="changeDirection('RIGHT')">➡️</button>
+    <div class="controls">
+  <button onclick="changeDirection('LEFT')">⬅</button>
+
+  <button id="pauseBtn" onclick="togglePause()">⏸</button>
+
+  <button onclick="changeDirection('RIGHT')">➡</button>
+    </div>
   </div>
 
   <button class="restart" onclick="restartGame()">Restart</button>
