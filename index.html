@@ -84,20 +84,23 @@
   <!-- GAME CANVAS -->
   <canvas id="game"></canvas>
 
-  <!-- CONTROLS -->
-  <div class="controls">
-    <div></div>
-    <button class="btn dir" onclick="setDir('UP')">↑</button>
-    <div></div>
+<!-- CONTROLS -->
+<div class="controls">
+  <div></div>
+  <button class="btn dir" onclick="setDir('UP')">↑</button>
+  <div></div>
 
-    <button class="btn dir" onclick="setDir('LEFT')">←</button>
-    <button class="btn center">▶</button>
-    <button class="btn dir" onclick="setDir('RIGHT')">→</button>
+  <button class="btn dir" onclick="setDir('LEFT')">←</button>
 
-    <div></div>
-    <button class="btn dir" onclick="setDir('DOWN')">↓</button>
-    <div></div>
-  </div>
+  <!-- ✅ REAL PAUSE / STOP BUTTON -->
+  <button class="btn center" id="pauseBtn" onclick="togglePause()">⏸</button>
+
+  <button class="btn dir" onclick="setDir('RIGHT')">→</button>
+
+  <div></div>
+  <button class="btn dir" onclick="setDir('DOWN')">↓</button>
+  <div></div>
+</div>
 
   <!-- RESTART -->
   <button class="restart" onclick="restartGame()">Restart</button>
