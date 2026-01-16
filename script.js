@@ -17,7 +17,7 @@ let isPaused = false;
 /* START GAME */
 function startLoop() {
   if (gameInterval) clearInterval(gameInterval);
-  gameInterval = setInterval(draw, 150);
+  gameInterval = setInterval(draw, 250);
 }
 
 /* INIT / RESTART */
