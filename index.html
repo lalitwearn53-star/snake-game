@@ -1,111 +1,122 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Snake Game</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
       margin: 0;
-      padding: 0;
+      min-height: 100vh;
       background: #020617;
-      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       font-family: Arial, sans-serif;
-      text-align: center;
+      color: white;
+    }
+
+    .game-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 420px;
     }
 
     h1 {
-      margin: 16px 0 6px;
+      margin: 10px 0 6px;
       font-size: 28px;
     }
 
-    #scoreBox, #highScoreBox {
-      font-size: 18px;
-      margin-bottom: 6px;
+    .score-box {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 16px;
     }
 
     canvas {
-      display: block;
-      margin: 12px auto;
-      border: 4px solid #22c55e;
+      width: 100%;
+      height: auto;
+      max-width: 380px;
+      aspect-ratio: 1 / 1;
+      border: 3px solid #22c55e;
       background: #020617;
+      margin-bottom: 16px;
     }
 
     /* CONTROLS */
     .controls {
-      margin-top: 14px;
       display: grid;
-      grid-template-columns: repeat(3, 80px);
-      grid-template-rows: repeat(3, 80px);
+      grid-template-columns: repeat(3, 70px);
+      grid-template-rows: repeat(3, 70px);
       gap: 10px;
       justify-content: center;
+      align-items: center;
+      margin-bottom: 12px;
     }
 
-    .btn {
-      border: none;
-      border-radius: 12px;
+    .controls button {
+      width: 70px;
+      height: 70px;
       font-size: 26px;
+      border-radius: 14px;
+      border: none;
+      background: #22c55e;
+      color: black;
       cursor: pointer;
     }
 
-    .dir {
-      background: #22c55e;
-      color: #000;
-    }
-
-    .center {
+    .controls .pause {
       background: #facc15;
     }
 
     .restart {
-      margin-top: 14px;
       padding: 12px 30px;
       font-size: 18px;
-      border: none;
       border-radius: 10px;
+      border: none;
       background: #ef4444;
-      color: #fff;
+      color: white;
       cursor: pointer;
     }
   </style>
 </head>
 
 <body>
+  <div class="game-wrapper">
 
-  <h1>🐍 Snake Game</h1>
+    <h1>🐍 Snake Game</h1>
 
-  <div id="scoreBox">
-    Score: <span id="score">0</span>
+    <div class="score-box">
+      Score: <span id="score">0</span><br>
+      High Score: <span id="highScore">0</span>
+    </div>
+
+    <!-- GAME CANVAS -->
+    <canvas id="game" width="380" height="380"></canvas>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+      <div></div>
+      <button onclick="setDir('UP')">↑</button>
+      <div></div>
+
+      <button onclick="setDir('LEFT')">←</button>
+      <button class="pause" onclick="togglePause()">⏸</button>
+      <button onclick="setDir('RIGHT')">→</button>
+
+      <div></div>
+      <button onclick="setDir('DOWN')">↓</button>
+      <div></div>
+    </div>
+
+    <!-- RESTART -->
+    <button class="restart" onclick="restartGame()">Restart</button>
+
   </div>
 
-  <div id="highScoreBox">
-    High Score: <span id="highScore">0</span>
-  </div>
-
-  <!-- GAME CANVAS -->
-  <canvas id="game" width="360" height="360"></canvas>
-
-  <!-- CONTROLS -->
-  <div class="controls">
-    <div></div>
-    <button class="btn dir" onclick="setDir('UP')">↑</button>
-    <div></div>
-
-    <button class="btn dir" onclick="setDir('LEFT')">←</button>
-    <button class="btn center" onclick="togglePause()">⏸</button>
-    <button class="btn dir" onclick="setDir('RIGHT')">→</button>
-
-    <div></div>
-    <button class="btn dir" onclick="setDir('DOWN')">↓</button>
-    <div></div>
-  </div>
-
-  <!-- RESTART -->
-  <button class="restart" onclick="restartGame()">Restart</button>
-
-  <!-- SCRIPT -->
   <script src="script.js"></script>
-
 </body>
 </html>
