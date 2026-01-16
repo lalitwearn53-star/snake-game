@@ -1,92 +1,44 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-/* SIZE */
-canvas.width = 360;
-canvas.height = 360;
+canvas.width = 500;
+canvas.height = 500;
+
 const box = 20;
 
-/* GAME STATE */
-let snake = [];
-let direction = "RIGHT";
-let food = {};
-let score = 0;
-let gameInterval = null;
-let isPaused = false;
+let snake;
+let direction;
+let food;
+let score;
+let highScore;
+let game;
+let paused = false;
 
-/* START GAME */
-function startLoop() {
-  if (gameInterval) clearInterval(gameInterval);
-  gameInterval = setInterval(draw, 250);
-}
-
-/* INIT / RESTART */
+/* ================= INIT ================= */
 function init() {
-  snake = [{ x: 160, y: 160 }];
+  snake = [{ x: 10 * box, y: 10 * box }];
   direction = "RIGHT";
   score = 0;
-  isPaused = false;
+  paused = false;
 
   document.getElementById("score").innerText = score;
-  document.getElementById("pauseBtn").innerText = "⏸";
+
+  highScore = localStorage.getItem("highScore") || 0;
+  document.getElementById("highScore").innerText = highScore;
 
   food = {
-    x: Math.floor(Math.random() * (canvas.width / box)) * box,
-    y: Math.floor(Math.random() * (canvas.height / box)) * box
+    x: Math.floor(Math.random() * 24) * box,
+    y: Math.floor(Math.random() * 24) * box
   };
 
-  startLoop();
+  if (game) clearInterval(game);
+  game = setInterval(draw, 150); // 👉 speed (bada number = slow)
 }
 
-/* DRAW */
-function draw() {
-  if (isPaused) return;
-
-  ctx.fillStyle = "#020617";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  // food
-  ctx.fillStyle = "red";
-  ctx.fillRect(food.x, food.y, box, box);
-
-  // snake
-  ctx.fillStyle = "lime";
-  snake.forEach(p => ctx.fillRect(p.x, p.y, box, box));
-
-  let head = { ...snake[0] };
-
-  if (direction === "UP") head.y -= box;
-  if (direction === "DOWN") head.y += box;
-  if (direction === "LEFT") head.x -= box;
-  if (direction === "RIGHT") head.x += box;
-
-  // wall hit → restart
-  if (
-    head.x < 0 || head.y < 0 ||
-    head.x >= canvas.width || head.y >= canvas.height
-  ) {
-    init();
-    return;
-  }
-
-  // eat food
-  if (head.x === food.x && head.y === food.y) {
-    score++;
-    document.getElementById("score").innerText = score;
-
-    food = {
-      x: Math.floor(Math.random() * (canvas.width / box)) * box,
-      y: Math.floor(Math.random() * (canvas.height / box)) * box
-    };
-  } else {
-    snake.pop();
-  }
-
-  snake.unshift(head);
-}
-
-/* DIRECTION (BUTTONS + KEYS) */
+/* ================= CONTROLS ================= */
 function setDir(dir) {
+  if (paused) return;
+
   if (dir === "UP" && direction !== "DOWN") direction = "UP";
   if (dir === "DOWN" && direction !== "UP") direction = "DOWN";
   if (dir === "LEFT" && direction !== "RIGHT") direction = "LEFT";
@@ -100,23 +52,84 @@ document.addEventListener("keydown", e => {
   if (e.key === "ArrowRight") setDir("RIGHT");
 });
 
-/* ✅ REAL PAUSE / RESUME */
+/* ================= PAUSE ================= */
 function togglePause() {
-  if (!isPaused) {
-    isPaused = true;
-    clearInterval(gameInterval);
-    document.getElementById("pauseBtn").innerText = "▶";
-  } else {
-    isPaused = false;
-    startLoop();
-    document.getElementById("pauseBtn").innerText = "⏸";
-  }
+  paused = !paused;
 }
 
-/* RESTART */
+/* ================= DRAW ================= */
+function draw() {
+  if (paused) return;
+
+  ctx.fillStyle = "#020617";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Food
+  ctx.fillStyle = "red";
+  ctx.fillRect(food.x, food.y, box, box);
+
+  // Snake
+  for (let i = 0; i < snake.length; i++) {
+    ctx.fillStyle = i === 0 ? "#22c55e" : "#4ade80";
+    ctx.fillRect(snake[i].x, snake[i].y, box, box);
+  }
+
+  let headX = snake[0].x;
+  let headY = snake[0].y;
+
+  if (direction === "LEFT") headX -= box;
+  if (direction === "RIGHT") headX += box;
+  if (direction === "UP") headY -= box;
+  if (direction === "DOWN") headY += box;
+
+  // Eat food
+  if (headX === food.x && headY === food.y) {
+    score++;
+    document.getElementById("score").innerText = score;
+
+    if (score > highScore) {
+      highScore = score;
+      localStorage.setItem("highScore", highScore);
+      document.getElementById("highScore").innerText = highScore;
+    }
+
+    food = {
+      x: Math.floor(Math.random() * 24) * box,
+      y: Math.floor(Math.random() * 24) * box
+    };
+  } else {
+    snake.pop();
+  }
+
+  let newHead = { x: headX, y: headY };
+
+  // Game Over
+  if (
+    headX < 0 ||
+    headY < 0 ||
+    headX >= canvas.width ||
+    headY >= canvas.height ||
+    collision(newHead, snake)
+  ) {
+    clearInterval(game);
+    alert("Game Over!");
+    return;
+  }
+
+  snake.unshift(newHead);
+}
+
+/* ================= HELPERS ================= */
+function collision(head, body) {
+  for (let i = 0; i < body.length; i++) {
+    if (head.x === body[i].x && head.y === body[i].y) return true;
+  }
+  return false;
+}
+
 function restartGame() {
   init();
 }
 
-/* START FIRST TIME */
+/* START */
 init();
