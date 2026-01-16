@@ -1,0 +1,49 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #0f172a;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+h1 {
+  margin-top: 15px;
+}
+
+.score {
+  margin: 10px;
+  font-size: 18px;
+}
+
+canvas {
+  background: #020617;
+  border: 3px solid #22c55e;
+  margin: 10px auto;
+  display: block;
+}
+
+.controls {
+  margin-top: 10px;
+}
+
+.controls button {
+  font-size: 22px;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 8px;
+  border: none;
+  background: #22c55e;
+  color: black;
+  font-weight: bold;
+}
+
+.restart {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
