@@ -1,8 +1,8 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-const box = 15;
-const canvasSize = 300;
+const box = 20;
+const canvasSize = 360;
 
 let snake;
 let direction;
@@ -11,7 +11,10 @@ let score;
 let game;
 
 function init() {
-  snake = [{ x: 150, y: 150 }];
+  snake = [{
+  x: Math.floor(canvasSize / 2 / box) * box,
+  y: Math.floor(canvasSize / 2 / box) * box
+}];
   direction = "RIGHT";
   score = 0;
   document.getElementById("score").innerText = score;
