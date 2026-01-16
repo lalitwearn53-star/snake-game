@@ -1,8 +1,25 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-const box = 20;
-const canvasSize = 600;
+function resizeCanvas() {
+  const size = Math.min(window.innerWidth, window.innerHeight) * 0.95;
+  canvas.width = size;
+  canvas.height = size;
+}
+
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+let box = 25;
+
+function updateBoxSize() {
+  box = Math.floor(canvas.width / 24); // grid auto adjust
+}
+
+updateBoxSize();
+window.addEventListener("resize", updateBoxSize);
 
 let snake;
 let direction;
