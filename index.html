@@ -1,39 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Snake Game</title>
-  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #020617;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      margin: 16px 0 6px;
+    }
+
+    #scoreBox {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    canvas {
+      border: 3px solid #22c55e;
+      background: #020617;
+    }
+
+    /* ===== CONTROLS ===== */
+    .controls {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(3, 70px);
+      grid-template-rows: repeat(3, 70px);
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn {
+      width: 70px;
+      height: 70px;
+      font-size: 26px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    .dir {
+      background: #22c55e;
+      color: black;
+    }
+
+    .center {
+      background: #facc15;
+    }
+
+    .restart {
+      margin: 16px 0 20px;
+      padding: 12px 28px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      background: #ef4444;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
 </head>
+
 <body>
+
   <h1>🐍 Snake Game</h1>
 
-  <div class="score">
+  <div id="scoreBox">
     Score: <span id="score">0</span>
   </div>
 
-<canvas id="game"></canvas>
-  
+  <!-- GAME CANVAS -->
+  <canvas id="game"></canvas>
+
+  <!-- CONTROLS -->
   <div class="controls">
-  <div class="row">
-    <button onclick="changeDirection('UP')">⬆</button>
+    <div></div>
+    <button class="btn dir" onclick="setDir('UP')">↑</button>
+    <div></div>
+
+    <button class="btn dir" onclick="setDir('LEFT')">←</button>
+    <button class="btn center">▶</button>
+    <button class="btn dir" onclick="setDir('RIGHT')">→</button>
+
+    <div></div>
+    <button class="btn dir" onclick="setDir('DOWN')">↓</button>
+    <div></div>
   </div>
 
-  <div class="row">
-    <button onclick="changeDirection('LEFT')">⬅</button>
-
-    <button id="pauseBtn" onclick="togglePause()">▶</button>
-
-    <button onclick="changeDirection('RIGHT')">➡</button>
-  </div>
-
-  <div class="row">
-    <button onclick="changeDirection('DOWN')">⬇</button>
-  </div>
-</div>
-
+  <!-- RESTART -->
   <button class="restart" onclick="restartGame()">Restart</button>
 
+  <!-- SCRIPT -->
   <script src="script.js"></script>
+
 </body>
 </html>
