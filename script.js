@@ -99,5 +99,16 @@ function collision(head, body) {
 function restartGame() {
   init();
 }
+let isPaused = false;
 
+function togglePause() {
+  if (isPaused) {
+    game = setInterval(draw, 200);
+    document.getElementById("pauseBtn").innerText = "⏸";
+  } else {
+    clearInterval(game);
+    document.getElementById("pauseBtn").innerText = "▶";
+  }
+  isPaused = !isPaused;
+}
 init();
