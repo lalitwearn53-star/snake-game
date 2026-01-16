@@ -15,14 +15,14 @@ h1 {
   margin: 10px;
   font-size: 18px;
 }
-
 canvas {
+  width: 95vw;      /* screen width ka 95% */
+  height: 95vw;     /* square rahe */
+  max-width: 95vh;  /* landscape me bhi fit */
+  max-height: 95vh;
+  border: 3px solid #2ecc71;
   background: #020617;
-  border: 3px solid #22c55e;
-  margin: 10px auto;
-  display: block;
 }
-
 .controls {
   display: flex;
   flex-direction: column;
