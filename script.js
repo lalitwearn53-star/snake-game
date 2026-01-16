@@ -1,23 +1,27 @@
-  const canvas = document.getElementById("game");
+  /* ===== CANVAS SETUP ===== */
+const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-/* ===== SIZE (BIG BOX) ===== */
+/* BIG SIZE (SAFE & STABLE) */
 canvas.width = 360;
 canvas.height = 360;
 
 const box = 20;
 
+/* ===== GAME VARIABLES ===== */
 let snake;
 let direction;
 let food;
 let score;
 let game;
+let isPaused = false;
 
-/* ===== START GAME ===== */
+/* ===== START / RESTART GAME ===== */
 function init() {
   snake = [{ x: 160, y: 160 }];
   direction = "RIGHT";
   score = 0;
+  isPaused = false;
 
   document.getElementById("score").innerText = score;
 
@@ -27,27 +31,21 @@ function init() {
   };
 
   if (game) clearInterval(game);
-  game = setInterval(draw, 150);
+  game = setInterval(draw, 150); // speed (150 = medium)
 }
 
-/* ===== CONTROLS ===== */
-document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
-  if (e.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
-  if (e.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
-  if (e.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
-});
-
-/* ===== DRAW ===== */
+/* ===== DRAW GAME ===== */
 function draw() {
+  if (isPaused) return;
+
   ctx.fillStyle = "#020617";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // food
+  /* FOOD */
   ctx.fillStyle = "red";
   ctx.fillRect(food.x, food.y, box, box);
 
-  // snake
+  /* SNAKE */
   ctx.fillStyle = "lime";
   snake.forEach(part => {
     ctx.fillRect(part.x, part.y, box, box);
@@ -60,7 +58,7 @@ function draw() {
   if (direction === "LEFT") head.x -= box;
   if (direction === "RIGHT") head.x += box;
 
-  // wall hit
+  /* WALL HIT → RESTART */
   if (
     head.x < 0 || head.y < 0 ||
     head.x >= canvas.width || head.y >= canvas.height
@@ -69,7 +67,7 @@ function draw() {
     return;
   }
 
-  // eat food
+  /* EAT FOOD */
   if (head.x === food.x && head.y === food.y) {
     score++;
     document.getElementById("score").innerText = score;
@@ -85,7 +83,7 @@ function draw() {
   snake.unshift(head);
 }
 
-/* ===== BUTTON FUNCTIONS ===== */
+/* ===== DIRECTION (BUTTONS + KEYS) ===== */
 function setDir(dir) {
   if (dir === "UP" && direction !== "DOWN") direction = "UP";
   if (dir === "DOWN" && direction !== "UP") direction = "DOWN";
@@ -93,9 +91,29 @@ function setDir(dir) {
   if (dir === "RIGHT" && direction !== "LEFT") direction = "RIGHT";
 }
 
+/* KEYBOARD SUPPORT */
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowUp") setDir("UP");
+  if (e.key === "ArrowDown") setDir("DOWN");
+  if (e.key === "ArrowLeft") setDir("LEFT");
+  if (e.key === "ArrowRight") setDir("RIGHT");
+});
+
+/* ===== PAUSE / RESUME ===== */
+function togglePause() {
+  if (!isPaused) {
+    clearInterval(game);
+    isPaused = true;
+  } else {
+    game = setInterval(draw, 150);
+    isPaused = false;
+  }
+}
+
+/* ===== RESTART BUTTON ===== */
 function restartGame() {
   init();
 }
 
-/* ===== START ===== */
+/* ===== START GAME FIRST TIME ===== */
 init();
