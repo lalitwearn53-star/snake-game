@@ -37,13 +37,9 @@ canvas {
 }
 
 .controls button {
-  width: 55px;
-  height: 55px;
-  font-size: 22px;
-  border-radius: 12px;
-  border: none;
-  background: #2ecc71;
-  color: black;
+  width: 65px;
+  height: 65px;
+  font-size: 26px;
 }
 
 #pauseBtn {
