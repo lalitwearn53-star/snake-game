@@ -1,14 +1,18 @@
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
+function init() {
+  snake = [{ x: box * 5, y: box * 5 }];
+  direction = "RIGHT";
+  score = 0;
 
-function resizeCanvas() {
-  const size = Math.min(window.innerWidth, window.innerHeight) * 0.95;
-  canvas.width = size;
-  canvas.height = size;
+  document.getElementById("score").innerText = score;
+
+  food = {
+    x: Math.floor(Math.random() * (canvas.width / box)) * box,
+    y: Math.floor(Math.random() * (canvas.height / box)) * box
+  };
+
+  if (game) clearInterval(game);
+  game = setInterval(draw, 120);
 }
-
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
