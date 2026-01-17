@@ -1,99 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Snake Game</title>
+  <meta charset="UTF-8" />
+  <title>Snake Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-body{
-  margin:0;
-  min-height:100vh;
-  background:#020617;
-  color:white;
-  font-family:Arial, sans-serif;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:flex-start;
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #020617;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-h1{ margin:15px 0 5px; }
+    h1 {
+      margin-top: 20px;
+    }
 
-.info{ margin-bottom:8px; }
+    .score-board {
+      margin: 10px 0;
+      text-align: center;
+    }
 
-.leaderboard{
-  background:#0f172a;
-  padding:10px 18px;
-  border-radius:10px;
-  margin-bottom:12px;
-}
+    canvas {
+      border: 4px solid #22c55e;
+      background: #020617;
+    }
 
-.game-box{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
+    .controls {
+      margin-top: 15px;
+      text-align: center;
+    }
 
-canvas{
-  border:4px solid #22c55e;
-  background:#020617;
-}
+    .controls button {
+      width: 60px;
+      height: 60px;
+      margin: 5px;
+      font-size: 20px;
+    }
 
-.controls{
-  margin-top:15px;
-  display:grid;
-  grid-template-columns:repeat(3,60px);
-  gap:8px;
-}
-
-.controls button{
-  font-size:20px;
-  padding:10px;
-}
-
-.restart{
-  margin-top:12px;
-  padding:8px 20px;
-  font-size:16px;
-}
-</style>
+    .restart {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
 </head>
 
 <body>
 
-<h1>🐍 Snake Game</h1>
+  <h1>🐍 Snake Game</h1>
 
-<div class="info">
-  Score: <span id="score">0</span> |
-  High Score: <span id="highScore">0</span>
-</div>
+  <div class="score-board">
+    Score: <span id="score">0</span> |
+    High Score: <span id="highScore">0</span>
+    <br><br>
+    🏆 Leaderboard (Top 1):
+    <span id="leaderboardScore">No score yet</span>
+  </div>
 
-<div class="leaderboard">
-  🏆 Leaderboard (Top 1):
-  <span id="leaderboardScore">No score yet</span>
-</div>
+  <canvas id="gameCanvas"></canvas>
 
-<div class="game-box">
-  <canvas id="gameCanvas" width="300" height="300"></canvas>
-</div>
+  <div class="controls">
+    <button onclick="changeDir('UP')">⬆</button><br>
+    <button onclick="changeDir('LEFT')">⬅</button>
+    <button id="pauseBtn" onclick="togglePause()">⏸</button>
+    <button onclick="changeDir('RIGHT')">➡</button><br>
+    <button onclick="changeDir('DOWN')">⬇</button>
+  </div>
 
-<div class="controls">
-  <div></div>
-  <button onclick="changeDir('UP')">⬆️</button>
-  <div></div>
+  <button class="restart" onclick="restartGame()">🔁 Restart</button>
 
-  <button onclick="changeDir('LEFT')">⬅️</button>
-  <button id="pauseBtn" onclick="togglePause()">⏸</button>
-  <button onclick="changeDir('RIGHT')">➡️</button>
-
-  <div></div>
-  <button onclick="changeDir('DOWN')">⬇️</button>
-  <div></div>
-</div>
-
-<button class="restart" onclick="restartGame()">🔄 Restart</button>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
