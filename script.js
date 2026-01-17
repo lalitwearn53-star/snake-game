@@ -68,7 +68,16 @@ function draw(){
 
   if(
     headX<0 || headY<0 ||
-    headX>=canvas.width || headY>=canvas.height ||
+    if(
+  headX < 0 ||
+  headY < 0 ||
+  headX > canvas.width - box ||
+  headY > canvas.height - box ||
+  snake.some(s => s.x === newHead.x && s.y === newHead.y)
+){
+  gameOver();
+  return;
+  }
     snake.some(s=>s.x===newHead.x && s.y===newHead.y)
   ){
     gameOver();
