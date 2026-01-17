@@ -59,3 +59,28 @@ canvas {
   max-width: 95vw;
   max-height: 95vw;
 }
+/* ===== Leaderboard Style ===== */
+.leaderboard {
+  margin: 10px auto;
+  max-width: 300px;
+  background: #111;
+  color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  font-family: Arial, sans-serif;
+}
+
+.leaderboard h2 {
+  text-align: center;
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.leaderboard ol {
+  padding-left: 20px;
+}
+
+.leaderboard li {
+  margin: 4px 0;
+  font-size: 14px;
+}
