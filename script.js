@@ -112,7 +112,11 @@ function togglePause() {
 }
 
 function restartGame() {
+  clearInterval(game);       // 🔴 VERY IMPORTANT
   paused = false;
-  document.getElementById("pauseBtn").innerText = "⏸";
+
+  const btn = document.getElementById("pauseBtn");
+  if (btn) btn.innerText = "⏸";
+
   startGame();
 }
