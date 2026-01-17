@@ -20,7 +20,13 @@ const pauseBtn = document.getElementById("pause");
 
 const box = 15;
 let snake, food, dir, score, game, paused = false;
+let highScore = localStorage.getItem("highScore") || 0;
 
+const scoreEl = document.getElementById("score");
+const highScoreEl = document.getElementById("highScore");
+const leaderboardEl = document.getElementById("leaderboardScore");
+
+highScoreEl.innerText = highScore;
 function startGame() {
   snake = [{ x: 150, y: 150 }];
   food = randomFood();
