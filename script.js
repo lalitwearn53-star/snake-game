@@ -3,10 +3,10 @@ const ctx = canvas.getContext("2d");
 
 const box = 15;
 
-// ---------- GAME VARIABLES ----------
+// GAME VARIABLES
 let snake, food, dir, score, game, paused = false;
 
-// ---------- SCORE SYSTEM ----------
+// SCORE SYSTEM
 let highScore = localStorage.getItem("highScore") || 0;
 
 const scoreEl = document.getElementById("score");
@@ -16,7 +16,11 @@ const leaderboardEl = document.getElementById("leaderboardScore");
 highScoreEl.innerText = highScore;
 if (highScore > 0) leaderboardEl.innerText = highScore;
 
-// ---------- START GAME ----------
+// START GAME AFTER PAGE LOAD
+window.onload = () => {
+  startGame();
+};
+
 function startGame() {
   snake = [{ x: 150, y: 150 }];
   food = randomFood();
@@ -28,9 +32,7 @@ function startGame() {
   game = setInterval(draw, 120);
 }
 
-startGame();
-
-// ---------- RANDOM FOOD ----------
+// RANDOM FOOD
 function randomFood() {
   return {
     x: Math.floor(Math.random() * (canvas.width / box)) * box,
@@ -38,20 +40,20 @@ function randomFood() {
   };
 }
 
-// ---------- DRAW ----------
+// DRAW GAME
 function draw() {
   if (paused) return;
 
   ctx.fillStyle = "#020617";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // Snake
+  // DRAW SNAKE
   snake.forEach((s, i) => {
     ctx.fillStyle = i === 0 ? "#22c55e" : "#16a34a";
     ctx.fillRect(s.x, s.y, box, box);
   });
 
-  // Food
+  // DRAW FOOD
   ctx.fillStyle = "red";
   ctx.fillRect(food.x, food.y, box, box);
 
@@ -63,7 +65,7 @@ function draw() {
   if (dir === "RIGHT") headX += box;
   if (dir === "DOWN") headY += box;
 
-  // ---------- FOOD EAT ----------
+  // EAT FOOD
   if (headX === food.x && headY === food.y) {
     score++;
     scoreEl.innerText = score;
@@ -72,9 +74,9 @@ function draw() {
     snake.pop();
   }
 
-  let newHead = { x: headX, y: headY };
+  const newHead = { x: headX, y: headY };
 
-  // ---------- COLLISION ----------
+  // COLLISION
   if (
     headX < 0 ||
     headY < 0 ||
@@ -89,12 +91,12 @@ function draw() {
   snake.unshift(newHead);
 }
 
-// ---------- SELF COLLISION ----------
-function collision(head, array) {
-  return array.some(s => s.x === head.x && s.y === head.y);
+// SELF COLLISION
+function collision(head, body) {
+  return body.some(s => s.x === head.x && s.y === head.y);
 }
 
-// ---------- GAME OVER ----------
+// GAME OVER
 function gameOver() {
   clearInterval(game);
 
@@ -109,7 +111,7 @@ function gameOver() {
   alert("Game Over! Score: " + score);
 }
 
-// ---------- CONTROLS ----------
+// CONTROLS
 function changeDir(d) {
   if (d === "LEFT" && dir !== "RIGHT") dir = "LEFT";
   if (d === "UP" && dir !== "DOWN") dir = "UP";
@@ -119,8 +121,4 @@ function changeDir(d) {
 
 function togglePause() {
   paused = !paused;
-}
-
-function restartGame() {
-  startGame();
 }
