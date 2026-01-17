@@ -2,26 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Snake Game</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Snake Game</title>
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- Leaderboard -->
-  <h2>🏆 Leaderboard</h2>
+  <!-- GAME TITLE -->
+  <h1>🐍 Snake Game</h1>
+
+  <!-- SCORE -->
+  <div class="score-box">
+    Score: <span id="score">0</span>
+  </div>
+
+  <!-- 🔥 SINGLE LEADERBOARD -->
+  <h2>🏆 Leaderboard (Top 3)</h2>
   <ul id="leaderboardList"></ul>
 
-  <!-- Firebase -->
+  <!-- GAME CANVAS -->
+  <canvas id="game"></canvas>
+
+  <!-- CONTROLS (Mobile) -->
+  <div class="controls">
+    <button onclick="changeDir('UP')">⬆️</button>
+    <div>
+      <button onclick="changeDir('LEFT')">⬅️</button>
+      <button onclick="changeDir('RIGHT')">➡️</button>
+    </div>
+    <button onclick="changeDir('DOWN')">⬇️</button>
+  </div>
+
+  <!-- ================= FIREBASE ================= -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
     import { getDatabase } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
@@ -31,51 +46,17 @@
       authDomain: "snake-game-leaderboard-3e296.firebaseapp.com",
       databaseURL: "https://snake-game-leaderboard-3e296-default-rtdb.asia-southeast1.firebasedatabase.app",
       projectId: "snake-game-leaderboard-3e296",
-      storageBucket: "snake-game-leaderboard-3e296.firebasestorage.app",
+      storageBucket: "snake-game-leaderboard-3e296.appspot.com",
       messagingSenderId: "325867588761",
       appId: "1:325867588761:web:90e805f0c979d33614bc08"
     };
 
     const app = initializeApp(firebaseConfig);
-    window.db = getDatabase(app); // 🔥 IMPORTANT
+    window.db = getDatabase(app);
   </script>
 
-  <!-- Game Script -->
-  <script src="script.js"></script>
+  <!-- GAME SCRIPT (MUST BE MODULE) -->
+  <script type="module" src="script.js"></script>
 
-</body>
-</html>
-<body>
-
-  <h1>🐍 Snake Game</h1>
-
-  <div class="score-box">
-    Score: <span id="score">0</span><br>
-    High Score: <span id="highScore">0</span>
-  </div>
-  <div class="leaderboard">
-  <h2>🏆 Leaderboard</h2>
-  <ol id="leaderboardList"></ol>
-  </div>
-
-  <canvas id="game"></canvas>
-
-  <!-- CONTROLS -->
-  <div class="controls">
-    <button id="upBtn">↑</button>
-
-    <div class="middle-controls">
-      <button id="leftBtn">←</button>
-      <button id="pauseBtn">⏸</button>
-      <button id="rightBtn">→</button>
-    </div>
-
-    <button id="downBtn">↓</button>
-  </div>
-
-  <button id="restartBtn" class="restart">Restart</button>
-
-  <!-- SCRIPT (IMPORTANT: body ke end me) -->
-  <script src="script.js"></script>
 </body>
 </html>
