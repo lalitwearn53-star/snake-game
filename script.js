@@ -17,6 +17,14 @@ let gameInterval;
 let speed = 120;
 let paused = false;
 
+// ========== BUTTON ELEMENTS ==========
+const upBtn = document.getElementById("upBtn");
+const downBtn = document.getElementById("downBtn");
+const leftBtn = document.getElementById("leftBtn");
+const rightBtn = document.getElementById("rightBtn");
+const pauseBtn = document.getElementById("pauseBtn");
+const restartBtn = document.getElementById("restartBtn");
+
 // ========== INIT GAME ==========
 function initGame() {
   snake = [{ x: 200, y: 200 }];
@@ -28,6 +36,8 @@ function initGame() {
   document.getElementById("highScore").innerText = highScore;
 
   food = randomFood();
+
+  pauseBtn.innerText = "⏸"; // reset icon
 
   clearInterval(gameInterval);
   gameInterval = setInterval(draw, speed);
@@ -49,36 +59,40 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
 });
 
-// ========== BUTTON CONTROLS ==========
-document.getElementById("upBtn").onclick = () => {
+// ========== MOBILE BUTTON CONTROLS ==========
+upBtn.onclick = () => {
   if (direction !== "DOWN") direction = "UP";
 };
 
-document.getElementById("downBtn").onclick = () => {
+downBtn.onclick = () => {
   if (direction !== "UP") direction = "DOWN";
 };
 
-document.getElementById("leftBtn").onclick = () => {
+leftBtn.onclick = () => {
   if (direction !== "RIGHT") direction = "LEFT";
 };
 
-document.getElementById("rightBtn").onclick = () => {
+rightBtn.onclick = () => {
   if (direction !== "LEFT") direction = "RIGHT";
 };
 
-// Pause / Resume
-document.getElementById("pauseBtn").onclick = () => {
-  if (paused) {
-    gameInterval = setInterval(draw, speed);
-    paused = false;
-  } else {
+// ========== PAUSE / PLAY ==========
+pauseBtn.onclick = () => {
+  if (!paused) {
     clearInterval(gameInterval);
     paused = true;
+    pauseBtn.innerText = "▶"; // play icon
+  } else {
+    gameInterval = setInterval(draw, speed);
+    paused = false;
+    pauseBtn.innerText = "⏸"; // pause icon
   }
 };
 
-// Restart
-document.getElementById("restartBtn").onclick = initGame;
+// ========== RESTART ==========
+restartBtn.onclick = () => {
+  initGame();
+};
 
 // ========== GAME LOOP ==========
 function draw() {
