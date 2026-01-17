@@ -1,25 +1,40 @@
+// ================= CANVAS =================
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-// ================= SETTINGS =================
 const box = 20;
 const canvasSize = 400;
 canvas.width = canvasSize;
 canvas.height = canvasSize;
 
-// ================= GAME STATE =================
-let snake = [{ x: 200, y: 200 }];
-let direction = "RIGHT";
-let score = 0;
+// ================= GAME VARIABLES =================
+let snake;
+let direction;
+let food;
+let score;
 let highScore = localStorage.getItem("highScore") || 0;
-document.getElementById("highScore").innerText = highScore;
+let gameInterval;
+let gameSpeed = 120;
 
-let food = {
-  x: Math.floor(Math.random() * (canvasSize / box)) * box,
-  y: Math.floor(Math.random() * (canvasSize / box)) * box,
-};
+// ================= INIT GAME =================
+function initGame() {
+  snake = [{ x: 200, y: 200 }];
+  direction = "RIGHT";
+  score = 0;
 
-// ================= CONTROLS =================
+  document.getElementById("score").innerText = score;
+  document.getElementById("highScore").innerText = highScore;
+
+  food = {
+    x: Math.floor(Math.random() * (canvasSize / box)) * box,
+    y: Math.floor(Math.random() * (canvasSize / box)) * box,
+  };
+
+  clearInterval(gameInterval);
+  gameInterval = setInterval(draw, gameSpeed);
+}
+
+// ================= CONTROLS (KEYBOARD) =================
 document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
   if (e.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
@@ -43,7 +58,7 @@ function draw() {
     ctx.fillRect(snake[i].x, snake[i].y, box, box);
   }
 
-  // Current head position
+  // Head position
   let headX = snake[0].x;
   let headY = snake[0].y;
 
@@ -68,7 +83,7 @@ function draw() {
     return;
   }
 
-  // ===== EAT FOOD =====
+  // ===== FOOD EAT =====
   if (headX === food.x && headY === food.y) {
     score++;
     document.getElementById("score").innerText = score;
@@ -84,10 +99,9 @@ function draw() {
       y: Math.floor(Math.random() * (canvasSize / box)) * box,
     };
   } else {
-    snake.pop(); // move forward
+    snake.pop();
   }
 
-  // Add new head
   snake.unshift(newHead);
 }
 
@@ -101,5 +115,8 @@ function collision(head, body) {
   return false;
 }
 
+// ================= RESTART BUTTON =================
+document.getElementById("restartBtn").addEventListener("click", initGame);
+
 // ================= START GAME =================
-const gameInterval = setInterval(draw, 120);
+initGame();
