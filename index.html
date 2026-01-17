@@ -70,12 +70,14 @@
   <canvas id="gameCanvas" width="360" height="360"></canvas>
 
   <div class="controls">
-    <button onclick="changeDir('UP')">⬆</button><br>
-    <button onclick="changeDir('LEFT')">⬅</button>
-    <button id="pauseBtn" class="pause" onclick="togglePause()">⏸</button>
-    <button onclick="changeDir('RIGHT')">➡</button><br>
-    <button onclick="changeDir('DOWN')">⬇</button>
-  </div>
+    <button onclick="changeDir('UP')" class="arrow">↑</button>
+
+<button onclick="changeDir('LEFT')" class="arrow">←</button>
+<button id="pauseBtn" class="pause" onclick="togglePause()">⏸</button>
+<button onclick="changeDir('RIGHT')" class="arrow">→</button>
+
+<button onclick="changeDir('DOWN')" class="arrow">↓</button>
+    }
 
   <button class="restart" onclick="restartGame()">🔁 Restart</button>
 
