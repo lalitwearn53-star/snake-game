@@ -72,15 +72,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const newHead = { x: headX, y: headY };
 
-    // COLLISION
-    if (
-      headX < 0 ||
-      headY < 0 ||
-      headX > canvas.width - box ||
-      headY > canvas.height - box ||
-      snake.some(s => s.x === newHead.x && s.y === newHead.y)
-    ) {
-      clearInterval(game);
+   if (
+  headX < 0 ||
+  headY < 0 ||
+  headX >= canvas.width ||
+  headY >= canvas.height ||
+  snake.some(s => s.x === newHead.x && s.y === newHead.y)
+) {
+  clearInterval(game);
+
+  if (score > highScore) {
+    highScore = score;
+    localStorage.setItem("highScore", highScore);
+    highScoreEl.innerText = highScore;
+  }
+
+  alert("Game Over! Score: " + score);
+  return;
+   }
 
       // HIGH SCORE UPDATE
       if (score > highScore) {
