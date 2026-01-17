@@ -2,47 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Snake Game</title>
 
-  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
-</head>
 
-<body>
-
-  <!-- GAME TITLE -->
-  <h1>🐍 Snake Game</h1>
-
-  <!-- SCORE -->
-  <div class="score-box">
-    Score: <span id="score">0</span>
-  </div>
-
-  <!-- 🔥 SINGLE LEADERBOARD -->
-  <h2>🏆 Leaderboard (Top 3)</h2>
-  <ul id="leaderboardList"></ul>
-
-  <!-- GAME CANVAS -->
-  <canvas id="game"></canvas>
-
-  <!-- CONTROLS (Mobile) -->
-  <div class="controls">
-    <button onclick="changeDir('UP')">⬆️</button>
-    <div>
-      <button onclick="changeDir('LEFT')">⬅️</button>
-      <button onclick="changeDir('RIGHT')">➡️</button>
-    </div>
-    <button onclick="changeDir('DOWN')">⬇️</button>
-  </div>
-
-  <!-- ================= FIREBASE ================= -->
+  <!-- Firebase -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
     import { getDatabase } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyAmU0y2KmmrrqktgdV5joK8QC1KaPNes",
+      apiKey: "AIzaSyAmU0y2KmmrrqktgdV5joK8QC1KaPNEs",
       authDomain: "snake-game-leaderboard-3e296.firebaseapp.com",
       databaseURL: "https://snake-game-leaderboard-3e296-default-rtdb.asia-southeast1.firebasedatabase.app",
       projectId: "snake-game-leaderboard-3e296",
@@ -54,8 +25,41 @@
     const app = initializeApp(firebaseConfig);
     window.db = getDatabase(app);
   </script>
+</head>
 
-  <!-- GAME SCRIPT (MUST BE MODULE) -->
+<body>
+
+  <h1>🐍 Snake Game</h1>
+
+  <div class="score-box">
+    Score: <span id="score">0</span>
+    &nbsp; | &nbsp;
+    High Score: <span id="highScore">0</span>
+  </div>
+
+  <!-- SINGLE LEADERBOARD -->
+  <div class="leaderboard">
+    <h2>🏆 Leaderboard (Top 3)</h2>
+    <ol id="leaderboardList">
+      <li>Loading...</li>
+    </ol>
+  </div>
+
+  <!-- GAME CANVAS -->
+  <canvas id="gameCanvas" width="300" height="300"></canvas>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <button id="up">⬆️</button>
+    <div>
+      <button id="left">⬅️</button>
+      <button id="pause">⏸️</button>
+      <button id="right">➡️</button>
+    </div>
+    <button id="down">⬇️</button>
+  </div>
+
+  <!-- GAME SCRIPT -->
   <script type="module" src="script.js"></script>
 
 </body>
