@@ -12,7 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let paused = false;
 
   const scoreEl = document.getElementById("score");
+  const highScoreEl = document.getElementById("highScore");
   const pauseBtn = document.getElementById("pauseBtn");
+
+  // HIGH SCORE (localStorage)
+  let highScore = Number(localStorage.getItem("highScore")) || 0;
+  highScoreEl.innerText = highScore;
 
   function randomFood() {
     return {
@@ -76,6 +81,14 @@ document.addEventListener("DOMContentLoaded", () => {
       snake.some(s => s.x === newHead.x && s.y === newHead.y)
     ) {
       clearInterval(game);
+
+      // HIGH SCORE UPDATE
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem("highScore", highScore);
+        highScoreEl.innerText = highScore;
+      }
+
       alert("Game Over! Score: " + score);
       return;
     }
