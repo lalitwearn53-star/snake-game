@@ -2,47 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Snake Game</title>
 
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Firebase -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-    import { getDatabase } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyAmU0y2KmmrrqktgdV5joK8QC1KaPNEs",
-      authDomain: "snake-game-leaderboard-3e296.firebaseapp.com",
-      databaseURL: "https://snake-game-leaderboard-3e296-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "snake-game-leaderboard-3e296",
-      storageBucket: "snake-game-leaderboard-3e296.appspot.com",
-      messagingSenderId: "325867588761",
-      appId: "1:325867588761:web:90e805f0c979d33614bc08"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    window.db = getDatabase(app);
-  </script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-  <h1>🐍 Snake Game</h1>
+  <!-- TITLE -->
+  <h1 class="title">🐍 Snake Game</h1>
 
+  <!-- SCORE -->
   <div class="score-box">
-    Score: <span id="score">0</span>
-    &nbsp; | &nbsp;
+    Score: <span id="score">0</span> |
     High Score: <span id="highScore">0</span>
   </div>
 
-  <!-- SINGLE LEADERBOARD -->
+  <!-- SINGLE LEADERBOARD (TOP 1 ONLY) -->
   <div class="leaderboard">
-    <h2>🏆 Leaderboard (Top 3)</h2>
-    <ol id="leaderboardList">
-      <li>Loading...</li>
-    </ol>
+    <h2>🏆 Leaderboard (Top 1)</h2>
+    <div id="leaderboardItem">No score yet</div>
   </div>
 
   <!-- GAME CANVAS -->
@@ -51,7 +32,7 @@
   <!-- CONTROLS -->
   <div class="controls">
     <button id="up">⬆️</button>
-    <div>
+    <div class="middle-controls">
       <button id="left">⬅️</button>
       <button id="pause">⏸️</button>
       <button id="right">➡️</button>
@@ -59,8 +40,11 @@
     <button id="down">⬇️</button>
   </div>
 
+  <!-- RESTART BUTTON -->
+  <button id="restart" class="restart-btn">🔁 Restart</button>
+
   <!-- GAME SCRIPT -->
-  <script type="module" src="script.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>
