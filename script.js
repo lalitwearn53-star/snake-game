@@ -99,10 +99,20 @@ function changeDir(d){
   if(d==="DOWN" && dir!=="UP") dir="DOWN";
 }
 
-function togglePause(){
-  paused=!paused;
+function togglePause() {
+  paused = !paused;
+
+  const btn = document.getElementById("pauseBtn");
+
+  if (paused) {
+    btn.innerText = "▶️";   // play icon
+  } else {
+    btn.innerText = "⏸";   // pause icon
+  }
 }
 
-function restartGame(){
+function restartGame() {
+  paused = false;
+  document.getElementById("pauseBtn").innerText = "⏸";
   startGame();
 }
