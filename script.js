@@ -1,4 +1,4 @@
-// ================= CANVAS =================
+// ========== CANVAS ==========
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
@@ -7,34 +7,41 @@ const canvasSize = 400;
 canvas.width = canvasSize;
 canvas.height = canvasSize;
 
-// ================= GAME VARIABLES =================
+// ========== GAME VARIABLES ==========
 let snake;
 let direction;
 let food;
 let score;
 let highScore = localStorage.getItem("highScore") || 0;
 let gameInterval;
-let gameSpeed = 120;
+let speed = 120;
+let paused = false;
 
-// ================= INIT GAME =================
+// ========== INIT GAME ==========
 function initGame() {
   snake = [{ x: 200, y: 200 }];
   direction = "RIGHT";
   score = 0;
+  paused = false;
 
   document.getElementById("score").innerText = score;
   document.getElementById("highScore").innerText = highScore;
 
-  food = {
+  food = randomFood();
+
+  clearInterval(gameInterval);
+  gameInterval = setInterval(draw, speed);
+}
+
+// ========== RANDOM FOOD ==========
+function randomFood() {
+  return {
     x: Math.floor(Math.random() * (canvasSize / box)) * box,
     y: Math.floor(Math.random() * (canvasSize / box)) * box,
   };
-
-  clearInterval(gameInterval);
-  gameInterval = setInterval(draw, gameSpeed);
 }
 
-// ================= CONTROLS (KEYBOARD) =================
+// ========== KEYBOARD CONTROLS ==========
 document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
   if (e.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
@@ -42,9 +49,39 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
 });
 
-// ================= GAME LOOP =================
+// ========== BUTTON CONTROLS ==========
+document.getElementById("upBtn").onclick = () => {
+  if (direction !== "DOWN") direction = "UP";
+};
+
+document.getElementById("downBtn").onclick = () => {
+  if (direction !== "UP") direction = "DOWN";
+};
+
+document.getElementById("leftBtn").onclick = () => {
+  if (direction !== "RIGHT") direction = "LEFT";
+};
+
+document.getElementById("rightBtn").onclick = () => {
+  if (direction !== "LEFT") direction = "RIGHT";
+};
+
+// Pause / Resume
+document.getElementById("pauseBtn").onclick = () => {
+  if (paused) {
+    gameInterval = setInterval(draw, speed);
+    paused = false;
+  } else {
+    clearInterval(gameInterval);
+    paused = true;
+  }
+};
+
+// Restart
+document.getElementById("restartBtn").onclick = initGame;
+
+// ========== GAME LOOP ==========
 function draw() {
-  // Background
   ctx.fillStyle = "#020617";
   ctx.fillRect(0, 0, canvasSize, canvasSize);
 
@@ -58,11 +95,9 @@ function draw() {
     ctx.fillRect(snake[i].x, snake[i].y, box, box);
   }
 
-  // Head position
   let headX = snake[0].x;
   let headY = snake[0].y;
 
-  // Move
   if (direction === "LEFT") headX -= box;
   if (direction === "UP") headY -= box;
   if (direction === "RIGHT") headX += box;
@@ -70,7 +105,7 @@ function draw() {
 
   const newHead = { x: headX, y: headY };
 
-  // ===== GAME OVER CHECK =====
+  // GAME OVER
   if (
     headX < 0 ||
     headY < 0 ||
@@ -83,7 +118,7 @@ function draw() {
     return;
   }
 
-  // ===== FOOD EAT =====
+  // EAT FOOD
   if (headX === food.x && headY === food.y) {
     score++;
     document.getElementById("score").innerText = score;
@@ -94,10 +129,7 @@ function draw() {
       document.getElementById("highScore").innerText = highScore;
     }
 
-    food = {
-      x: Math.floor(Math.random() * (canvasSize / box)) * box,
-      y: Math.floor(Math.random() * (canvasSize / box)) * box,
-    };
+    food = randomFood();
   } else {
     snake.pop();
   }
@@ -105,7 +137,7 @@ function draw() {
   snake.unshift(newHead);
 }
 
-// ================= COLLISION =================
+// ========== COLLISION ==========
 function collision(head, body) {
   for (let i = 0; i < body.length; i++) {
     if (head.x === body[i].x && head.y === body[i].y) {
@@ -115,8 +147,5 @@ function collision(head, body) {
   return false;
 }
 
-// ================= RESTART BUTTON =================
-document.getElementById("restartBtn").addEventListener("click", initGame);
-
-// ================= START GAME =================
+// ========== START GAME ==========
 initGame();
