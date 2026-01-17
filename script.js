@@ -1,3 +1,11 @@
+let score = 0;
+let highScore = localStorage.getItem("highScore") || 0;
+
+const scoreEl = document.getElementById("score");
+const highScoreEl = document.getElementById("highScore");
+const leaderboardEl = document.getElementById("leaderboardScore");
+
+highScoreEl.innerText = highScore;
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
