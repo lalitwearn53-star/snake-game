@@ -4,14 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const ctx = canvas.getContext("2d");
 
   const box = 20;
-  const rows = canvas.width / box;
-  const cols = canvas.height / box;
-
-  const scoreEl = document.getElementById("score");
-  const highScoreEl = document.getElementById("highScore");
-  const leaderboardEl = document.getElementById("leaderboardScore");
-  const pauseBtn = document.getElementById("pauseBtn");
-
   let snake = [];
   let food = {};
   let dir = "RIGHT";
@@ -19,14 +11,13 @@ document.addEventListener("DOMContentLoaded", () => {
   let game = null;
   let paused = false;
 
-  let highScore = Number(localStorage.getItem("highScore")) || 0;
-  highScoreEl.innerText = highScore;
-  leaderboardEl.innerText = highScore === 0 ? "No score yet" : highScore;
+  const scoreEl = document.getElementById("score");
+  const pauseBtn = document.getElementById("pauseBtn");
 
   function randomFood() {
     return {
-      x: Math.floor(Math.random() * rows) * box,
-      y: Math.floor(Math.random() * cols) * box
+      x: Math.floor(Math.random() * (canvas.width / box)) * box,
+      y: Math.floor(Math.random() * (canvas.height / box)) * box
     };
   }
 
@@ -76,27 +67,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const newHead = { x: headX, y: headY };
 
+    // COLLISION
     if (
       headX < 0 ||
       headY < 0 ||
-      headX >= canvas.width ||
-      headY >= canvas.height ||
+      headX > canvas.width - box ||
+      headY > canvas.height - box ||
       snake.some(s => s.x === newHead.x && s.y === newHead.y)
     ) {
       clearInterval(game);
-      if (score > highScore) {
-        highScore = score;
-        localStorage.setItem("highScore", highScore);
-      }
-      highScoreEl.innerText = highScore;
-      leaderboardEl.innerText = highScore;
-      alert("Game Over!");
+      alert("Game Over! Score: " + score);
       return;
     }
 
     snake.unshift(newHead);
   }
 
+  // CONTROLS
   window.changeDir = function(d) {
     if (d === "LEFT" && dir !== "RIGHT") dir = "LEFT";
     if (d === "UP" && dir !== "DOWN") dir = "UP";
@@ -113,6 +100,6 @@ document.addEventListener("DOMContentLoaded", () => {
     startGame();
   };
 
-  // 🔥 AUTO START ON LOAD
+  // AUTO START
   startGame();
 });
